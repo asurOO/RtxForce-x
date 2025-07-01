@@ -1,3 +1,8 @@
+#!/bin/bash
+
+clear
+command -v lolcat >/dev/null 2>&1 || { echo "lolcat not found. Installing..."; apt install lolcat -y; }
+
 from rich.console import Console
 from pyfiglet import figlet_format
 
