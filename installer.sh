@@ -9,7 +9,11 @@ echo
 cd /tmp || exit
 rm -rf RtxForce-x
 git clone https://github.com/asurOO/RtxForce-x.git
-cd RtxForce-x || exit
+cd RtxForce-x || exit 
+
+pip install telethon
+python3 -m venv venv
+source venv/bin/activate
 
 # Make script executable
 chmod +x rtxforce.sh
