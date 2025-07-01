@@ -1,29 +1,46 @@
 #!/bin/bash
 
 clear
-command -v lolcat >/dev/null 2>&1 || { echo "lolcat not found. Installing..."; apt install lolcat -y; }
 
-from rich.console import Console
-from pyfiglet import figlet_format
+# 🛠 Ensure lolcat is installed
+command -v lolcat >/dev/null 2>&1 || {
+    echo "🌈 Installing lolcat..."
+    apt update && apt install lolcat -y
+}
 
-console = Console()
+# 🛠 Ensure Python modules are installed
+pip show rich pyfiglet >/dev/null 2>&1 || {
+    echo "🐍 Installing required Python packages..."
+    pip install rich pyfiglet
+}
 
-console.print("[bold blue]Tool by Rtxconfigz Team[/bold blue]")
-console.print("[green]SYSTEM SETUP...[/green]\n")
+# 🧾 Show UI header using Python
+python3 ui.py
 
-# Display with pyfiglet
-ascii_banner = figlet_format("RTX SETUP")
-console.print(f"[bold cyan]{ascii_banner}[/bold cyan]")
+# ⚙️ User input
+read -p "⚙️ Enter Your App ID: " appid
+read -p "⚙️ Enter Your App Hash: " apphash
+read -p "📞 Enter Your Phone Number: " number
 
-console.print("[yellow]Scanning processes...[/yellow]")
-console.print("[yellow]Scanning candidates...[/yellow]")
-console.print("[yellow]Scanning linux images...[/yellow]")
+# 🔧 Replace placeholders in forward.py
+sed -i "s|APP_ID_REPLACE|$appid|g" forward.py
+sed -i "s|APP_HASH_REPLACE|$apphash|g" forward.py
 
-# Show warning nicely
-console.print("[bold red]WARNING:[/bold red] apt does not have a stable CLI interface.\n")
+# 📲 Login to Telegram
+python3 forward.py login "$number"
 
-# Show error
-console.print("[red]ERROR:[/red] Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'\n")
+# 🔁 Forwarding section
+clear
+figlet -f big "FORCE - X" | lolcat
+echo -e "\e[91mTool by Rtxconfigz Team\e[0m     \e[97m[v1]\e[0m"
 
-# Ask for input
-app_id = input("⚙️  Enter Your App ID: ")
+read -p "📦 Source Link (e.g. https://t.me/c/xxxx/xxx): " source
+read -p "🎯 Target Channel: " target
+read -p "🔁 Resume from link (or blank to start all): " link
+
+msg_id=0
+[[ ! -z "$link" ]] && msg_id=$(echo "$link" | awk -F'/' '{print $6}')
+source_id=$(echo "$source" | awk -F'/' '{print $5}')
+
+# 🚀 Start forwarding
+python3 forward.py forward "$source_id" "$target" "$msg_id"
