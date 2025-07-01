@@ -1,22 +1,30 @@
 #!/bin/bash
 
-# Display banner
+# 🌟 Banner
 echo
 echo "🌟 Installing RtxForce-X Telegram Forwarder"
 echo
 
-# Clone repo to temporary folder
-cd /tmp || exit
+# 🧹 Clean + Clone repo to temporary folder
+cd /tmp || exit 1
 rm -rf RtxForce-x
-git clone https://github.com/asurOO/RtxForce-x.git
-cd RtxForce-x || exit 
+git clone https://github.com/asurOO/RtxForce-x.git || {
+    echo "❌ Failed to clone repo."
+    exit 1
+}
+cd RtxForce-x || exit 1
 
-pip install telethon
+# 🧪 Create & activate virtual environment
 python3 -m venv venv
 source venv/bin/activate
 
-# Make script executable
+# 📦 Install Python dependencies
+echo "📦 Installing Python packages (telethon, rich, pyfiglet)..."
+pip install --upgrade pip >/dev/null
+pip install -r requirements.txt || pip install telethon rich pyfiglet
+
+# ✅ Make main script executable
 chmod +x rtxforce.sh
 
-# Run the main script
+# 🚀 Run the main tool
 ./rtxforce.sh
