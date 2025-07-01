@@ -20,7 +20,6 @@ python3 ui.py
 # ⚙️ User input
 read -p "⚙️ Enter Your App ID: " appid
 read -p "⚙️ Enter Your App Hash: " apphash
-read -p "📞 Enter Your Phone Number: " number
 
 # 🔧 Replace placeholders in forward.py
 sed -i "s|APP_ID_REPLACE|$appid|g" forward.py
@@ -38,6 +37,6 @@ echo -e "\e[91mTool by Rtxconfigz Team\e[0m     \e[97m[v1]\e[0m"
 read -p "📦 Source Chat ID (e.g. -1001234567890): " source_id
 read -p "🎯 Target Chat ID or @username: " target
 read -p "🔁 Resume from message ID (0 to start all): " msg_id
-
+msg_id=${msg_id:-0}
 # 🚀 Start forwarding
 python3 forward.py forward "$source_id" "$target" "$msg_id"
