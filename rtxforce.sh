@@ -5,7 +5,7 @@ clear
 # 🛠 Ensure lolcat is installed
 command -v lolcat >/dev/null 2>&1 || {
     echo "🌈 Installing lolcat..."
-    apt update && apt install lolcat -y
+    apt-get update && apt-get install lolcat -y
 }
 
 # 🛠 Ensure Python modules are installed
