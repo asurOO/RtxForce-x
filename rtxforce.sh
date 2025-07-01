@@ -34,13 +34,10 @@ clear
 figlet -f big "FORCE - X" | lolcat
 echo -e "\e[91mTool by Rtxconfigz Team\e[0m     \e[97m[v1]\e[0m"
 
-read -p "📦 Source Link (e.g. https://t.me/c/xxxx/xxx): " source
-read -p "🎯 Target Channel: " target
-read -p "🔁 Resume from link (or blank to start all): " link
-
-msg_id=0
-[[ ! -z "$link" ]] && msg_id=$(echo "$link" | awk -F'/' '{print $6}')
-source_id=$(echo "$source" | awk -F'/' '{print $5}')
+# 🆔 Now use direct Chat ID input
+read -p "📦 Source Chat ID (e.g. -1001234567890): " source_id
+read -p "🎯 Target Chat ID or @username: " target
+read -p "🔁 Resume from message ID (0 to start all): " msg_id
 
 # 🚀 Start forwarding
 python3 forward.py forward "$source_id" "$target" "$msg_id"
